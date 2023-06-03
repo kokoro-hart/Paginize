@@ -1,24 +1,39 @@
-'use strict';
-
-/** @type {import('eslint').Linter.BaseConfig} */
 module.exports = {
-  root: true,
-  extends: ['@mizdra/mizdra', '@mizdra/mizdra/+node', '@mizdra/mizdra/+prettier'],
-  parserOptions: {
-    ecmaVersion: 2022,
-  },
+  extends: [
+    'airbnb-base',
+    'airbnb-typescript/base',
+    'plugin:@typescript-eslint/recommended',
+    'prettier',
+  ],
+  plugins: ['import', 'unused-imports', '@typescript-eslint'],
+  parser: '@typescript-eslint/parser',
   env: {
+    browser: true,
     es2022: true,
     node: true,
   },
-  overrides: [
-    {
-      files: ['*.ts', '*.tsx', '*.cts', '*.mts'],
-      extends: ['@mizdra/mizdra/+typescript', '@mizdra/mizdra/+prettier'],
-    },
-  ],
-  rules: {
-    "no-unused-expressions": ["error", { "allowTernary": false }]
+  parserOptions: {
+    ecmaVersion: 'latest',
+    project: './tsconfig.json',
   },
-  ignorePatterns: ['./src/index.js'],
+  rules: {
+    '@typescript-eslint/no-unused-vars': 'off',
+    'import/order': [
+      'error',
+      {
+        groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index', 'object'],
+        'newlines-between': 'always',
+        alphabetize: { order: 'asc', caseInsensitive: true },
+      },
+    ],
+    'import/prefer-default-export': 'off',
+    'unused-imports/no-unused-imports': 'error',
+    'no-underscore-dangle': 'off',
+  },
+  ignorePatterns: ['vite.config.ts'],
+  settings: {
+    'import/resolver': {
+      typescript: {},
+    },
+  },
 };
