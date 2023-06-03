@@ -1,10 +1,5 @@
 # Build output
-dist/png
-dist/svg
-dist/chunks
-dist/_astro
-dist/favicon.svg
-dist/robots.txt
+dist/
 .output/
 
 
