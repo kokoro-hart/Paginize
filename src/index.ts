@@ -46,7 +46,7 @@ export type BreakpointOptions = Pick<PartialOption, "perPage" | "pageRangeDispla
 }
 
 export type PaginizeOption = PartialOption & {
-  breakpoint: BreakpointOptions
+  breakpoint?: BreakpointOptions
 }
 
 export class Pagination {

@@ -1,11 +1,11 @@
-#!/usr/bin/env node
-// @ts-check
+// #!/usr/bin/env node
+// // @ts-check
 
-import { run } from '../dist/index.js';
+// import { run } from '../dist/index.js';
 
-run().catch((e) => {
-  // eslint-disable-next-line no-console
-  console.error(e);
-  // eslint-disable-next-line n/no-process-exit
-  process.exit(1);
-});
+// run().catch((e) => {
+//   // eslint-disable-next-line no-console
+//   console.error(e);
+//   // eslint-disable-next-line n/no-process-exit
+//   process.exit(1);
+// });
