@@ -17,4 +17,8 @@ module.exports = {
       extends: ['@mizdra/mizdra/+typescript', '@mizdra/mizdra/+prettier'],
     },
   ],
+  rules: {
+    "no-unused-expressions": ["error", { "allowTernary": false }]
+  },
+  ignorePatterns: ['./src/index.js'],
 };

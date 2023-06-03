@@ -1,4 +1,4 @@
-type DefaultOption = {
+export type DefaultOption = {
   // common
   contentItem: string;
   perPage: number;
@@ -30,9 +30,6 @@ type DefaultOption = {
   firstPageMessage: string;
   lastPageMessage: string;
 
-  // breakpoint
-  breakpoint: BreakpointOptions;
-
   // callback
   onPageChange: (current: number) => void | undefined;
   onClickNext: () => void | undefined;
@@ -42,10 +39,14 @@ type DefaultOption = {
   onMounted: () => void | undefined;
 };
 
-type PaginizeOption = Partial<DefaultOption>;
+export type PartialOption = Partial<DefaultOption>;
 
-type BreakpointOptions = Pick<PaginizeOption, 'perPage' | 'pageRangeDisplayed' | 'isChooseUp'> & {
+export type BreakpointOptions = Pick<PartialOption, 'perPage' | 'pageRangeDisplayed' | 'isChooseUp'> & {
   minWidth: number;
+};
+
+export type PaginizeOption = PartialOption & {
+  breakpoint: BreakpointOptions;
 };
 
 export class Pagination {
@@ -286,14 +287,14 @@ export class Pagination {
     if (!this.buttonNext || !this.buttonPrev) return;
     this.buttonNext.addEventListener('click', () => {
       this.updatePageState((this.currentPager += 1));
-      this.onPageChange !== undefined && this.onPageChange(this.currentPager);
-      this.onClickNext() !== undefined && this.onClickNext();
+      if (this.onPageChange !== undefined) this.onPageChange(this.currentPager);
+      if (this.onClickNext !== undefined) this.onClickNext();
     });
 
     this.buttonPrev.addEventListener('click', () => {
       this.updatePageState((this.currentPager -= 1));
-      this.onPageChange !== undefined && this.onPageChange(this.currentPager);
-      this.onClickPrev() !== undefined && this.onClickPrev();
+      if (this.onPageChange !== undefined) this.onPageChange(this.currentPager);
+      if (this.onClickPrev() !== undefined) this.onClickPrev();
     });
   }
 
@@ -391,8 +392,8 @@ export class Pagination {
       element.addEventListener('click', () => {
         this.currentPager = Number(element.getAttribute('data-counter-id'));
         this.updatePageState(this.currentPager);
-        this.onPageChange !== undefined && this.onPageChange(this.currentPager);
-        this.onClickNumber !== undefined && this.onClickNumber();
+        if (this.onPageChange !== undefined) this.onPageChange(this.currentPager);
+        if (this.onClickNumber !== undefined) this.onClickNumber();
       });
     });
   }
@@ -412,8 +413,9 @@ export class Pagination {
 
     const countList = document.createElement(`${this.pageNumberHref ? 'a' : this.pageNumberTag}`);
 
-    this.pageNumberHref && countList.setAttribute('href', `${this.pageNumberHref}${i}`);
-    this.pageNumberTag === 'button' && countList.setAttribute('type', 'button');
+    if (this.pageNumberHref) countList.setAttribute('href', `${this.pageNumberHref}${i}`);
+    if (this.pageNumberTag === 'button') countList.setAttribute('type', 'button');
+
     countList.setAttribute('data-counter-id', String(i));
     if (i === this.totalPage) {
       countList.setAttribute('aria-label', `${this.lastPageMessage}`);

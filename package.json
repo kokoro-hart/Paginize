@@ -11,9 +11,8 @@
     "build": "tsc -p tsconfig.build.json",
     "dev": "npm run build && node bin/example-command.js",
     "lint": "run-s -c lint:*",
-    "lint:tsc": "tsc",
-    "lint:eslint": "eslint .",
-    "lint:prettier": "prettier --check .",
+    "lint:eslint": "eslint --ext .ts --cache ./src",
+    "lint:prettier": "prettier --write src/**/*.{js,ts}",
     "test": "vitest"
   },
   "prettier": "@mizdra/prettier-config-mizdra",
