@@ -1,19 +1,11 @@
 {
-  "name": "paginize",
-  "description": "app_description",
-  "version": "1.0.0",
-  "type": "module",
+  "name": "@kokorotobita/paginize",
+  "description": "Library for implementing simple pagination",
+  "version": "1.0.1",
   "author": "kokoro <cocosyu.11261126@gmail.com>",
   "license": "MIT",
-  "private": true,
-  "exports": {
-    ".": {
-      "import": {
-        "types": "./dist/index.d.ts",
-        "default": "./dist/index.js"
-      }
-    }
-  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "dev": "npm run build && node bin/example-command.js",
@@ -58,5 +50,13 @@
     "!src/**/*.test.ts",
     "!src/**/__snapshots__",
     "dist"
-  ]
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kokoro-hart/Paginize.git"
+  },
+  "bugs": {
+    "url": "https://github.com/kokoro-hart/Paginize/issues"
+  },
+  "homepage": "https://github.com/kokoro-hart/Paginize#readme"
 }
