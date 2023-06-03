@@ -123,7 +123,7 @@ export class Pagination {
     root: string,
     {
       // common
-      contentItem = '.pagininze-item',
+      contentItem = '.paginize-item',
       perPage = 5,
       isNextPrev = true,
       isHistory = true,
@@ -134,12 +134,12 @@ export class Pagination {
       ellipsisText = '. . .',
 
       // navigation
-      prevEl = '.pagininze-prev',
-      nextEl = '.pagininze-next',
+      prevEl = '.paginize-prev',
+      nextEl = '.paginize-next',
 
       // pager
-      pageNumberWrapEl = '.pagininze-counter',
-      pageNumberEl = '.pagininze-number',
+      pageNumberWrapEl = '.paginize-counter',
+      pageNumberEl = '.paginize-number',
       pageNumberTag = 'button',
       pageNumberHref = '',
       isChooseUp = false,
@@ -326,7 +326,7 @@ export class Pagination {
   };
 
   protected updateCurrentButton(count = 1) {
-    this.currentPagerEl = document.querySelector(`.pagininze-number[data-counter-id="${count}"]`);
+    this.currentPagerEl = document.querySelector(`.paginize-number[data-counter-id="${count}"]`);
     this.currentPagerEl?.setAttribute('data-current', 'true');
   }
 
@@ -432,7 +432,7 @@ export class Pagination {
     const createEllipsis = () => {
       if (!this.pageCounterWrap) return;
       const ellipsis = document.createElement('span');
-      ellipsis.classList.add('pagininze-ellipsis');
+      ellipsis.classList.add('paginize-ellipsis');
       ellipsis.innerHTML = this.ellipsisText;
       this.pageCounterWrap.appendChild(ellipsis);
     };
