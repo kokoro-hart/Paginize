@@ -49,7 +49,7 @@ export type PaginizeOption = PartialOption & {
   breakpoint?: BreakpointOptions
 }
 
-export class Pagination {
+export class Paginize {
   readonly targetRoot!: HTMLElement | null
 
   readonly targetNodes!: NodeListOf<HTMLElement> | null
@@ -164,7 +164,7 @@ export class Pagination {
       onClickNumber = undefined,
       onBeforeMount = undefined,
       onMounted = undefined,
-    }: PaginizeOption
+    }: PaginizeOption = {}
   ) {
     Object.assign(this, {
       perPage,
