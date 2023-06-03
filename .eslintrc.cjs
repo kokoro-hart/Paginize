@@ -1,60 +1,20 @@
-/** @type {import("eslint/lib/shared/types").ConfigData} */
+'use strict';
 
+/** @type {import('eslint').Linter.BaseConfig} */
 module.exports = {
   root: true,
+  extends: ['@mizdra/mizdra', '@mizdra/mizdra/+node', '@mizdra/mizdra/+prettier'],
+  parserOptions: {
+    ecmaVersion: 2022,
+  },
   env: {
-    node: true,
-    browser: true,
     es2022: true,
-  },
-  extends: [
-    'eslint:recommended',
-    'plugin:astro/recommended',
-    'plugin:@typescript-eslint/recommended',
-    'prettier'
-  ],
-  plugins: [
-    '@typescript-eslint/eslint-plugin',
-    'import',
-    'unused-imports'
-  ],
-  rules: {
-    'no-console': ['warn', { allow: ['warn', 'error'] }],
-    '@typescript-eslint/ban-ts-comment': 'warn',
-    '@typescript-eslint/no-unused-vars': [
-      'warn',
-      {
-        argsIgnorePattern: '^_',
-      },
-    ],
-    'import/order': [
-      'error',
-      {
-        groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index', 'object'],
-        'newlines-between': 'always',
-        alphabetize: { order: 'asc', caseInsensitive: true },
-      },
-    ],
-    'import/prefer-default-export': 'off',
-    'unused-imports/no-unused-imports': 'error',
-  },
-  globals: {
-    Astro: 'readonly',
-    window: 'readonly',
+    node: true,
   },
   overrides: [
-    // for .astro files
     {
-      files: ['**/*.astro'],
-      parser: 'astro-eslint-parser',
-      parserOptions: {
-        parser: '@typescript-eslint/parser',
-        extraFileExtensions: ['.astro'],
-      },
-      rules: {
-        '@typescript-eslint/no-explicit-any': 'warn',
-      },
+      files: ['*.ts', '*.tsx', '*.cts', '*.mts'],
+      extends: ['@mizdra/mizdra/+typescript', '@mizdra/mizdra/+prettier'],
     },
   ],
-  ignorePatterns: ['astro.config.mjs', '.eslintrc.cjs', '.stylelintrc.cjs', '.markuplintrc.js'],
 };
