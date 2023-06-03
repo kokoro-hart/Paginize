@@ -1,0 +1,15 @@
+---
+import Content from "@/components/layout/Content/Content.astro"
+import PaginationDefault from "@/demos/PaginationDefault/PaginationDefault.astro"
+import AppLayout from "@/layouts/App.astro"
+
+const meta = {
+  title: "dev",
+}
+---
+
+<AppLayout {meta}>
+  <Content>
+    <PaginationDefault />
+  </Content>
+</AppLayout>

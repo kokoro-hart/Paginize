@@ -1,0 +1,16 @@
+---
+import style from "./Content.module.scss"
+
+import type { HTMLTagString } from "@/types/astro"
+
+export interface Props {
+  tag?: HTMLTagString
+  width?: "narrow" | "wide"
+}
+
+const { tag: Tag = "div", width = "wide" } = Astro.props
+---
+
+<Tag class={style.content} data-width={width}>
+  <slot />
+</Tag>

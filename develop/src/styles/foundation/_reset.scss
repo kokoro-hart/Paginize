@@ -1,0 +1,227 @@
+@charset "utf-8";
+@use "../global" as *;
+
+* {
+  box-sizing: border-box;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+
+  &::before,
+  &::after {
+    box-sizing: inherit;
+  }
+}
+
+:root {
+  min-height: 100vh;
+  line-break: strict;
+}
+
+:root,
+body {
+  height: 100%;
+}
+
+body {
+  color: $color_black;
+  overflow-wrap: break-word;
+
+  @include fz(16);
+  @include font_serif;
+
+  // 背景固定
+  &._isScrollLock {
+    position: fixed;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+html,
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+a,
+p,
+span,
+em,
+small,
+strong,
+sub,
+sup,
+mark,
+del,
+ins,
+strike,
+abbr,
+dfn,
+blockquote,
+q,
+cite,
+code,
+pre,
+ol,
+ul,
+li,
+dl,
+dt,
+dd,
+div,
+section,
+article,
+main,
+aside,
+nav,
+header,
+hgroup,
+footer,
+img,
+figure,
+figcaption,
+address,
+time,
+audio,
+video,
+canvas,
+iframe,
+details,
+summary,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td {
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+
+a {
+  outline: none;
+  -webkit-touch-callout: none;
+
+  &,
+  &:visited {
+    color: inherit;
+  }
+
+  &:hover {
+    @include md {
+      text-decoration: none;
+    }
+  }
+}
+
+article,
+aside,
+footer,
+header,
+nav,
+section,
+main {
+  display: block;
+}
+
+ol,
+ul {
+  list-style: none;
+}
+
+img,
+video {
+  max-width: 100%;
+}
+
+img {
+  vertical-align: top;
+  border-style: none;
+}
+
+blockquote,
+q {
+  quotes: none;
+}
+
+blockquote::after,
+blockquote::before,
+q::after,
+q::before {
+  content: none;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+[disabled] {
+  cursor: not-allowed;
+}
+
+:focus-visible {
+  outline: 2px solid;
+}
+
+/* base layout */
+.site-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.siteContent {
+  margin-top: $header_height_sp;
+
+  @include md {
+    margin-top: $header_height;
+  }
+}
+
+main {
+  flex: 1;
+  overflow: hidden;
+}
+
+/* form */
+
+input[type="text"],
+input[type="tel"],
+input[type="number"],
+input[type="date"],
+input[type="time"],
+input[type="password"],
+input[type="email"],
+textarea {
+  appearance: none;
+  -webkit-tap-highlight-color: rgba(0 0 0 / 0%);
+}
+
+textarea {
+  display: block;
+}
+
+fieldset {
+  margin: 0;
+  border: none;
+}
+
+legend {
+  display: none;
+}
+
+table {
+  border-spacing: 0;
+  border-collapse: collapse;
+}

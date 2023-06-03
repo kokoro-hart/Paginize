@@ -1,0 +1,12 @@
+---
+import DocumentLayout, { Props as DocumentProps } from "../layouts/Document.astro"
+export type Props = DocumentProps
+
+const props = Astro.props
+---
+
+<DocumentLayout {...props}>
+  <main id="start-of-content" class="siteContent">
+    <slot />
+  </main>
+</DocumentLayout>

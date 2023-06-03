@@ -1,0 +1,12 @@
+{
+  "files.associations": {
+    "*.css": "postcss"
+  },
+  "yaml.schemaStore.enable": false,
+  "css.customData": ["./.vscode/css.json"],
+  "recommendations": ["astro-build.astro-vscode", "esbenp.prettier-vscode"],
+  "prettier.documentSelectors": ["**/*.astro"],
+  "[astro]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
+}
