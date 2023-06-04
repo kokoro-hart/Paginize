@@ -6,22 +6,23 @@ export type DefaultOption = {
   isHistory: boolean
 
   // counter
-  pageRangeDisplayed: number
+  pageRangeDisplayed: 1 | 2
 
   // navigation
   prevEl: string
   nextEl: string
 
   // pager
-  pageNumberWrapEl: string
+  pageNumberList: string
+  pageNumberItem: string
   pageNumberEl: string
   pageNumberTag: string
   pageNumberHref: string
-  isChooseUp: boolean
 
   // Ellipsis
   isEllipsis: boolean
   ellipsisText: string
+  ellipsisStartPage: number
 
   // A11y
   nextMassage: string
@@ -41,7 +42,7 @@ export type DefaultOption = {
 
 export type PartialOption = Partial<DefaultOption>
 
-export type BreakpointOptions = Pick<PartialOption, "perPage" | "pageRangeDisplayed" | "isChooseUp"> & {
+export type BreakpointOptions = Pick<PartialOption, "perPage" | "ellipsisStartPage" | "pageRangeDisplayed"> & {
   minWidth: number
 }
 
@@ -62,9 +63,9 @@ export class Paginize {
 
   readonly perPage!: number
 
-  readonly pageRangeDisplayed!: number
+  readonly ellipsisStartPage!: number
 
-  readonly isChooseUp!: boolean
+  readonly pageRangeDisplayed!: 1 | 2
 
   currentPagerEl!: HTMLElement | null
 
@@ -80,7 +81,7 @@ export class Paginize {
 
   indexEnd!: number
 
-  _pageRangeDisplayed!: number
+  _ellipsisStartPage!: number
 
   isHistory!: boolean
 
@@ -88,13 +89,15 @@ export class Paginize {
 
   ellipsisText!: string
 
+  pageNumberItem!: string
+
   pageNumberEl!: string
 
   pageNumberTag!: string
 
   pageNumberHref!: string
 
-  _isChooseUp!: boolean
+  _pageRangeDisplayed!: 1 | 2
 
   nextMassage!: string
 
@@ -124,13 +127,13 @@ export class Paginize {
     root: string,
     {
       // common
-      contentItem = ".paginize-item",
+      contentItem = ".paginize-content",
       perPage = 5,
       isNextPrev = true,
       isHistory = true,
 
-      // counter
-      pageRangeDisplayed = 5,
+      // ellipsis
+      ellipsisStartPage = 5,
       isEllipsis = true,
       ellipsisText = ". . .",
 
@@ -139,11 +142,12 @@ export class Paginize {
       nextEl = ".paginize-next",
 
       // pager
-      pageNumberWrapEl = ".paginize-counter",
+      pageNumberList = ".paginize-counter-list",
+      pageNumberItem = ".paginize-counter-item",
       pageNumberEl = ".paginize-number",
       pageNumberTag = "button",
       pageNumberHref = "",
-      isChooseUp = false,
+      pageRangeDisplayed = 1,
 
       // A11y
       nextMassage = "Go to next page",
@@ -171,14 +175,15 @@ export class Paginize {
       isNextPrev,
       isHistory,
 
-      pageRangeDisplayed,
+      ellipsisStartPage,
       isEllipsis,
       ellipsisText,
 
+      pageNumberItem,
       pageNumberEl,
       pageNumberTag,
       pageNumberHref,
-      isChooseUp,
+      pageRangeDisplayed,
 
       nextMassage,
       prevMassage,
@@ -203,7 +208,7 @@ export class Paginize {
 
     this.targetNodes = this.targetRoot.querySelectorAll(contentItem)
 
-    this.pageCounterWrap = this.targetRoot.querySelector(pageNumberWrapEl)
+    this.pageCounterWrap = this.targetRoot.querySelector(pageNumberList)
 
     if (isNextPrev) {
       this.buttonPrev = this.targetRoot.querySelector(prevEl)
@@ -231,17 +236,19 @@ export class Paginize {
     const listener = (event: MediaQueryList | MediaQueryListEvent) => {
       if (event.matches) {
         this._perPage = this.breakpoint.perPage ? this.breakpoint.perPage : this.perPage
+        this._ellipsisStartPage = this.breakpoint.ellipsisStartPage
+          ? this.breakpoint.ellipsisStartPage
+          : this.ellipsisStartPage
         this._pageRangeDisplayed = this.breakpoint.pageRangeDisplayed
           ? this.breakpoint.pageRangeDisplayed
           : this.pageRangeDisplayed
-        this._isChooseUp = this.breakpoint.isChooseUp ? this.breakpoint.isChooseUp : this.isChooseUp
 
         this.initConstructor()
         this.initQueryParams()
       } else {
         this._perPage = this.perPage
+        this._ellipsisStartPage = this.ellipsisStartPage
         this._pageRangeDisplayed = this.pageRangeDisplayed
-        this._isChooseUp = this.isChooseUp
         this.initConstructor()
         this.initQueryParams()
       }
@@ -328,7 +335,7 @@ export class Paginize {
 
   protected updateCurrentButton(count = 1) {
     this.currentPagerEl = document.querySelector(`.paginize-number[data-counter-id="${count}"]`)
-    this.currentPagerEl?.setAttribute("data-current", "true")
+    this.currentPagerEl?.setAttribute("aria-current", "page")
   }
 
   protected updateContentsView(current: number, counts: number) {
@@ -413,6 +420,7 @@ export class Paginize {
   protected createPagerEls(i: number) {
     if (!this.pageCounterWrap) return
 
+    const liElement = document.createElement("li")
     const countList = document.createElement(`${this.pageNumberHref ? "a" : this.pageNumberTag}`)
 
     if (this.pageNumberHref) countList.setAttribute("href", `${this.pageNumberHref}${i}`)
@@ -429,10 +437,14 @@ export class Paginize {
     }
     countList.classList.add(this.pageNumberEl.replace(".", ""))
     countList.textContent = String(i)
-    this.pageCounterWrap.appendChild(countList)
+    liElement.classList.add(this.pageNumberItem.replace(".", ""))
+    this.pageCounterWrap.appendChild(liElement)
+    liElement.appendChild(countList)
   }
 
   protected createPageCounterWithEllipsis(current: number, totalPage: number) {
+    this.pageCounterWrap?.setAttribute("aria-busy", "true")
+
     const createEllipsis = () => {
       if (!this.pageCounterWrap) return
       const ellipsis = document.createElement("span")
@@ -441,17 +453,15 @@ export class Paginize {
       this.pageCounterWrap.appendChild(ellipsis)
     }
 
-    if (totalPage > this._pageRangeDisplayed && this._pageRangeDisplayed > 4) {
+    if (totalPage > this._ellipsisStartPage && this._ellipsisStartPage > 4) {
       const startPage = 1
 
       if (totalPage === 5 + 1) {
         for (let i = 1; i <= totalPage; i += 1) {
           this.createPagerEls(i)
         }
-      } else if (current <= 5 / 2 + 1.5) {
-        const plusNum = this._isChooseUp ? 2 : 1
-
-        for (let i = startPage; i <= current + plusNum; i += 1) {
+      } else if (current <= 3) {
+        for (let i = startPage; i <= current + 2; i += 1) {
           this.createPagerEls(i)
         }
 
@@ -477,8 +487,7 @@ export class Paginize {
         }
 
         createEllipsis()
-        const plusNum = this._isChooseUp ? 2 : 1
-        for (let i = current - plusNum; i <= current + plusNum; i += 1) {
+        for (let i = current - this._pageRangeDisplayed; i <= current + this._pageRangeDisplayed; i += 1) {
           this.createPagerEls(i)
         }
 
@@ -491,5 +500,7 @@ export class Paginize {
         this.createPagerEls(i)
       }
     }
+
+    this.pageCounterWrap?.setAttribute("aria-busy", "false")
   }
 }

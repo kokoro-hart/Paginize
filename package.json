@@ -1,7 +1,7 @@
 {
   "name": "@kokorotobita/paginize",
   "description": "Library for implementing simple pagination",
-  "version": "1.0.8",
+  "version": "1.1.0",
   "author": "kokoro <cocosyu.11261126@gmail.com>",
   "license": "MIT",
   "type": "module",
@@ -61,5 +61,8 @@
   "bugs": {
     "url": "https://github.com/kokoro-hart/Paginize/issues"
   },
-  "homepage": "https://github.com/kokoro-hart/Paginize#readme"
+  "homepage": "https://github.com/kokoro-hart/Paginize#readme",
+  "dependencies": {
+    "jsdom": "^22.1.0"
+  }
 }
