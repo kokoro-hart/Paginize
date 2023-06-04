@@ -1,7 +1,7 @@
 # Paginize
 [![ci](https://github.com/kokoro-hart/Paginize/actions/workflows/ci.yml/badge.svg)](https://github.com/kokoro-hart/Paginize/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![License: MIT](https://img.shields.io/badge/vresion-1.0.9-blue)](https://www.npmjs.com/package/@kokorotobita/paginize?activeTab=readme)
+[![License: MIT](https://img.shields.io/badge/vresion-1.1.0-blue)](https://www.npmjs.com/package/@kokorotobita/paginize?activeTab=readme)
 
 
 **Paginize** is a library for easily applying pagination to the existing DOM, implemented in **TypeScrip**t. Furthermore, it can reliably create pagination UI that complies with [WAI-ARIA guidelines](https://design-system.w3.org/components/pagination.html "タイトル")  with minimal configuration. <br>
