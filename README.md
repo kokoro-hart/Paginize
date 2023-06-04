@@ -94,9 +94,6 @@ const pagination = new Paginize(".paginize", {
   onClickPrev: () => {
     // prev page button clicked
   },
-  onClickNumber: () => {
-    // page number button clicked
-  },
   onBeforeMount: () => {
     // before mount
   },
