@@ -17,15 +17,15 @@ Following are some of the interactions handled by the library:-
  
 ※Asynchronous paging is not supported
 
-# Installation
+## Installation
 Paginize is provided by npm and can be installed from the command line.
 
 ```
 npm i @kokorotobita/paginize
 ```
 
-# Quick Start
-## 1. Add the pagination markup
+## Quick Start
+### 1. Add the pagination markup
 
 ```html
 <!-- [1] Wrapper-->
@@ -61,7 +61,7 @@ Wrapper element for pagination.The aria-label attribute adds to the `<nav>` elem
 **[ 4 ] PageNumbers<br>**
 A page number list is output here.　The `aria-busy` attribute is added to explicitly indicate that the contents are updated each time.
 
-## 2. Add Paginize Instance
+### 2. Add Paginize Instance
 Import modules to instantiate Paginize
 ```js
 import { Paginize } from "@kokorotobita/paginize"
@@ -69,7 +69,7 @@ import { Paginize } from "@kokorotobita/paginize"
 const pagination = new Paginize(".paginize")
 ```
 
-# [WIP] Using Options
+## [WIP] Using Options
 Frequently used options
 Accepts an optional configuration object as the second argument.
 ```ts
@@ -103,7 +103,7 @@ const pagination = new Paginize(".paginize", {
 })
 ```
 
-# License
+## License
 
 Released under the MIT license.
 
