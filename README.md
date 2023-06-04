@@ -24,8 +24,8 @@ Paginize is provided by npm and can be installed from the command line.
 npm i @kokorotobita/paginize
 ```
 
-# Usage
-1. Add the pagination markup
+# Quick Start
+## 1. Add the pagination markup
 
 ```html
 <!-- [1] Wrapper-->
@@ -61,5 +61,53 @@ Wrapper element for pagination.The aria-label attribute adds to the `<nav>` elem
 **[ 4 ] PageNumbers<br>**
 A page number list is output here.　The `aria-busy` attribute is added to explicitly indicate that the contents are updated each time.
 
+## 2. Add Paginize Instance
+Import modules to instantiate Paginize
+```js
+import { Paginize } from "@kokorotobita/paginize"
 
+const pagination = new Paginize(".paginize")
+```
 
+# [WIP] Using Options
+Frequently used options
+Accepts an optional configuration object as the second argument.
+```ts
+const pagination = new Paginize(".paginize", {
+  perPage: 10, // Number of contents to be displayed on one page
+  pageRangeDisplayed: 2, // This determines how many "before and after" numbers are displayed on the page you are on.
+
+  // A11y
+  nextMassage: "Go to next page",
+  prevMassage: "Go to prev page",
+  bulletMessage: "Go to page {{count}}",
+  firstPageMessage: "This is first page",
+  lastPageMessage: "This is last page",
+
+  // Function
+  onPageChange: (current: number) => {
+    console.log("current page is", current)
+  },
+  onClickNext: () => {
+    // next page button clicked
+  },
+  onClickPrev: () => {
+    // prev page button clicked
+  },
+  onClickNumber: () => {
+    // page number button clicked
+  },
+  onBeforeMount: () => {
+    // before mount
+  },
+  onMounted: () => {
+    // after mount
+  },
+})
+```
+
+# License
+
+Released under the MIT license.
+
+MIT: [http://rem.mit-license.org](http://rem.mit-license.org/), See [LICENSE](/LICENSE)
